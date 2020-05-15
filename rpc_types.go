@@ -9,7 +9,10 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"strings"
 	"time"
+
+	"github.com/canselcik/go-deribit/models"
 
 	"github.com/go-openapi/runtime"
 )
@@ -32,6 +35,12 @@ func NewRPCRequest(method string) *RPCRequest {
 		JsonRpc: rpcVersion,
 		Method:  method,
 		Params:  make(map[string]interface{}),
+	}
+}
+
+func (r *RPCRequest) AddAuth(auth *models.PublicAuthResponse) {
+	if strings.HasPrefix(r.Method, "private/") && auth != nil {
+		r.Params["access_token"] = auth.Result.AccessToken
 	}
 }
 
@@ -135,19 +144,22 @@ func (RPCResponse) GetHeader(string) string {
 func (r *RPCResponse) Body() io.ReadCloser {
 	raw := []byte(fmt.Sprintf(`{"result": %s}`, r.Result))
 	// Here is where we handle Deribit's idiosyncratic response types
-	b := r.preFilter(raw)
+	b := preFilter(raw)
 	return ioutil.NopCloser(bytes.NewReader(b))
 }
 
-func (RPCResponse) preFilter(src []byte) []byte {
+func preFilter(src []byte) []byte {
+	// Price field should always be a float64, but sometimes they send a string :)
 	re := regexp.MustCompile(`"market_price"`)
 	return re.ReplaceAllFunc(src, func(in []byte) []byte {
+		// For market orders, replace 'market_price' with the average_price value
 		r := regexp.MustCompile(`"average_price":([0-9.]+)`)
 		matches := r.FindAllSubmatch(src, 1)
 		if len(matches) > 0 {
 			return matches[0][1]
 		}
-		return in
+		// If there is no average_price the just send a valid float64
+		return []byte("0.0")
 	})
 }
 
@@ -174,6 +186,15 @@ func NewRPCCall(req *RPCRequest) *RPCCall {
 	}
 }
 
+func (r *RPCCall) CloseOK() {
+	r.Done <- true
+}
+
+func (r *RPCCall) CloseError(err error) {
+	r.Error = err
+	r.Done <- true
+}
+
 // RPCSubscription is a subscription to an event type to receive notifications about
 type RPCSubscription struct {
 	Data    chan *RPCNotification
@@ -188,4 +209,26 @@ type RPCNotification struct {
 		Data    json.RawMessage `json:"data"`
 		Channel string          `json:"channel"`
 	} `json:"params,omitempty"`
+}
+
+type composite struct {
+	RPCNotification
+	RPCResponse
+}
+
+func (c *composite) toResponse() *RPCResponse {
+	return &RPCResponse{
+		JsonRpc: rpcVersion,
+		ID:      c.RPCResponse.ID,
+		Result:  c.RPCResponse.Result,
+		Error:   c.RPCResponse.Error,
+	}
+}
+
+func (c *composite) toNotification() *RPCNotification {
+	return &RPCNotification{
+		JsonRpc: rpcVersion,
+		Method:  c.RPCNotification.Method,
+		Params:  c.RPCNotification.Params,
+	}
 }

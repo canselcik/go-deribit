@@ -1,4 +1,6 @@
 .DEFAULT_GOAL := default
+.EXPORT_ALL_VARIABLES: 
+GO111MODULE=on
 
 default: build
 
@@ -9,6 +11,12 @@ build-example: cmd/example/main.go
 
 build-gen: cmd/gen/main.go
 	@go build ./cmd/gen
+
+generate-swagger-json:
+	@pip install pyyaml pyyaml-include
+	@python scripts/parseincludes.py > schema/compiled.yaml
+	@npm install -g api-spec-converter
+	@api-spec-converter schema/compiled.yaml --from=openapi_3 --to=swagger_2 -d > schema/swagger.json
 
 generate-models:
 	@go get -u github.com/go-swagger/go-swagger/cmd/swagger
@@ -23,4 +31,4 @@ generate-methods: build-gen
 	goimports -w rpc_subscriptions.go
 	@gofmt -w rpc_subscriptions.go
 
-.PHONY: generate-models generate-client generate-methods
+.PHONY: generate-models generate-client generate-methods generate-swagger-json
