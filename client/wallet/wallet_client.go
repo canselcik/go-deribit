@@ -9,12 +9,11 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new wallet API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -26,8 +25,35 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	GetPrivateAddToAddressBook(params *GetPrivateAddToAddressBookParams) (*GetPrivateAddToAddressBookOK, error)
+
+	GetPrivateCancelWithdrawal(params *GetPrivateCancelWithdrawalParams) (*GetPrivateCancelWithdrawalOK, error)
+
+	GetPrivateCreateDepositAddress(params *GetPrivateCreateDepositAddressParams) (*GetPrivateCreateDepositAddressOK, error)
+
+	GetPrivateGetAddressBook(params *GetPrivateGetAddressBookParams) (*GetPrivateGetAddressBookOK, error)
+
+	GetPrivateGetCurrentDepositAddress(params *GetPrivateGetCurrentDepositAddressParams) (*GetPrivateGetCurrentDepositAddressOK, error)
+
+	GetPrivateGetDeposits(params *GetPrivateGetDepositsParams) (*GetPrivateGetDepositsOK, error)
+
+	GetPrivateGetTransfers(params *GetPrivateGetTransfersParams) (*GetPrivateGetTransfersOK, error)
+
+	GetPrivateGetWithdrawals(params *GetPrivateGetWithdrawalsParams) (*GetPrivateGetWithdrawalsOK, error)
+
+	GetPrivateRemoveFromAddressBook(params *GetPrivateRemoveFromAddressBookParams) (*GetPrivateRemoveFromAddressBookOK, error)
+
+	GetPrivateToggleDepositAddressCreation(params *GetPrivateToggleDepositAddressCreationParams) (*GetPrivateToggleDepositAddressCreationOK, error)
+
+	GetPrivateWithdraw(params *GetPrivateWithdrawParams) (*GetPrivateWithdrawOK, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-GetPrivateAddToAddressBook adds new entry to address book of given type
+  GetPrivateAddToAddressBook adds new entry to address book of given type
 */
 func (a *Client) GetPrivateAddToAddressBook(params *GetPrivateAddToAddressBookParams) (*GetPrivateAddToAddressBookOK, error) {
 	// TODO: Validate the params before sending
@@ -40,7 +66,7 @@ func (a *Client) GetPrivateAddToAddressBook(params *GetPrivateAddToAddressBookPa
 		Method:             "GET",
 		PathPattern:        "/private/add_to_address_book",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateAddToAddressBookReader{formats: a.formats},
@@ -61,7 +87,7 @@ func (a *Client) GetPrivateAddToAddressBook(params *GetPrivateAddToAddressBookPa
 }
 
 /*
-GetPrivateCancelWithdrawal cancels withdrawal request
+  GetPrivateCancelWithdrawal cancels withdrawal request
 */
 func (a *Client) GetPrivateCancelWithdrawal(params *GetPrivateCancelWithdrawalParams) (*GetPrivateCancelWithdrawalOK, error) {
 	// TODO: Validate the params before sending
@@ -74,7 +100,7 @@ func (a *Client) GetPrivateCancelWithdrawal(params *GetPrivateCancelWithdrawalPa
 		Method:             "GET",
 		PathPattern:        "/private/cancel_withdrawal",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateCancelWithdrawalReader{formats: a.formats},
@@ -95,7 +121,7 @@ func (a *Client) GetPrivateCancelWithdrawal(params *GetPrivateCancelWithdrawalPa
 }
 
 /*
-GetPrivateCreateDepositAddress creates deposit address in currency
+  GetPrivateCreateDepositAddress creates deposit address in currency
 */
 func (a *Client) GetPrivateCreateDepositAddress(params *GetPrivateCreateDepositAddressParams) (*GetPrivateCreateDepositAddressOK, error) {
 	// TODO: Validate the params before sending
@@ -108,7 +134,7 @@ func (a *Client) GetPrivateCreateDepositAddress(params *GetPrivateCreateDepositA
 		Method:             "GET",
 		PathPattern:        "/private/create_deposit_address",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateCreateDepositAddressReader{formats: a.formats},
@@ -129,7 +155,7 @@ func (a *Client) GetPrivateCreateDepositAddress(params *GetPrivateCreateDepositA
 }
 
 /*
-GetPrivateGetAddressBook retrieves address book of given type
+  GetPrivateGetAddressBook retrieves address book of given type
 */
 func (a *Client) GetPrivateGetAddressBook(params *GetPrivateGetAddressBookParams) (*GetPrivateGetAddressBookOK, error) {
 	// TODO: Validate the params before sending
@@ -142,7 +168,7 @@ func (a *Client) GetPrivateGetAddressBook(params *GetPrivateGetAddressBookParams
 		Method:             "GET",
 		PathPattern:        "/private/get_address_book",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetAddressBookReader{formats: a.formats},
@@ -163,7 +189,7 @@ func (a *Client) GetPrivateGetAddressBook(params *GetPrivateGetAddressBookParams
 }
 
 /*
-GetPrivateGetCurrentDepositAddress retrieves deposit address for currency
+  GetPrivateGetCurrentDepositAddress retrieves deposit address for currency
 */
 func (a *Client) GetPrivateGetCurrentDepositAddress(params *GetPrivateGetCurrentDepositAddressParams) (*GetPrivateGetCurrentDepositAddressOK, error) {
 	// TODO: Validate the params before sending
@@ -176,7 +202,7 @@ func (a *Client) GetPrivateGetCurrentDepositAddress(params *GetPrivateGetCurrent
 		Method:             "GET",
 		PathPattern:        "/private/get_current_deposit_address",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetCurrentDepositAddressReader{formats: a.formats},
@@ -197,7 +223,7 @@ func (a *Client) GetPrivateGetCurrentDepositAddress(params *GetPrivateGetCurrent
 }
 
 /*
-GetPrivateGetDeposits retrieves the latest users deposits
+  GetPrivateGetDeposits retrieves the latest users deposits
 */
 func (a *Client) GetPrivateGetDeposits(params *GetPrivateGetDepositsParams) (*GetPrivateGetDepositsOK, error) {
 	// TODO: Validate the params before sending
@@ -210,7 +236,7 @@ func (a *Client) GetPrivateGetDeposits(params *GetPrivateGetDepositsParams) (*Ge
 		Method:             "GET",
 		PathPattern:        "/private/get_deposits",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetDepositsReader{formats: a.formats},
@@ -231,7 +257,7 @@ func (a *Client) GetPrivateGetDeposits(params *GetPrivateGetDepositsParams) (*Ge
 }
 
 /*
-GetPrivateGetTransfers adds new entry to address book of given type
+  GetPrivateGetTransfers adds new entry to address book of given type
 */
 func (a *Client) GetPrivateGetTransfers(params *GetPrivateGetTransfersParams) (*GetPrivateGetTransfersOK, error) {
 	// TODO: Validate the params before sending
@@ -244,7 +270,7 @@ func (a *Client) GetPrivateGetTransfers(params *GetPrivateGetTransfersParams) (*
 		Method:             "GET",
 		PathPattern:        "/private/get_transfers",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetTransfersReader{formats: a.formats},
@@ -265,7 +291,7 @@ func (a *Client) GetPrivateGetTransfers(params *GetPrivateGetTransfersParams) (*
 }
 
 /*
-GetPrivateGetWithdrawals retrieves the latest users withdrawals
+  GetPrivateGetWithdrawals retrieves the latest users withdrawals
 */
 func (a *Client) GetPrivateGetWithdrawals(params *GetPrivateGetWithdrawalsParams) (*GetPrivateGetWithdrawalsOK, error) {
 	// TODO: Validate the params before sending
@@ -278,7 +304,7 @@ func (a *Client) GetPrivateGetWithdrawals(params *GetPrivateGetWithdrawalsParams
 		Method:             "GET",
 		PathPattern:        "/private/get_withdrawals",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetWithdrawalsReader{formats: a.formats},
@@ -299,7 +325,7 @@ func (a *Client) GetPrivateGetWithdrawals(params *GetPrivateGetWithdrawalsParams
 }
 
 /*
-GetPrivateRemoveFromAddressBook adds new entry to address book of given type
+  GetPrivateRemoveFromAddressBook adds new entry to address book of given type
 */
 func (a *Client) GetPrivateRemoveFromAddressBook(params *GetPrivateRemoveFromAddressBookParams) (*GetPrivateRemoveFromAddressBookOK, error) {
 	// TODO: Validate the params before sending
@@ -312,7 +338,7 @@ func (a *Client) GetPrivateRemoveFromAddressBook(params *GetPrivateRemoveFromAdd
 		Method:             "GET",
 		PathPattern:        "/private/remove_from_address_book",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateRemoveFromAddressBookReader{formats: a.formats},
@@ -333,7 +359,7 @@ func (a *Client) GetPrivateRemoveFromAddressBook(params *GetPrivateRemoveFromAdd
 }
 
 /*
-GetPrivateToggleDepositAddressCreation enables or disable deposit address creation
+  GetPrivateToggleDepositAddressCreation enables or disable deposit address creation
 */
 func (a *Client) GetPrivateToggleDepositAddressCreation(params *GetPrivateToggleDepositAddressCreationParams) (*GetPrivateToggleDepositAddressCreationOK, error) {
 	// TODO: Validate the params before sending
@@ -346,7 +372,7 @@ func (a *Client) GetPrivateToggleDepositAddressCreation(params *GetPrivateToggle
 		Method:             "GET",
 		PathPattern:        "/private/toggle_deposit_address_creation",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateToggleDepositAddressCreationReader{formats: a.formats},
@@ -367,7 +393,7 @@ func (a *Client) GetPrivateToggleDepositAddressCreation(params *GetPrivateToggle
 }
 
 /*
-GetPrivateWithdraw creates a new withdrawal request
+  GetPrivateWithdraw creates a new withdrawal request
 */
 func (a *Client) GetPrivateWithdraw(params *GetPrivateWithdrawParams) (*GetPrivateWithdrawOK, error) {
 	// TODO: Validate the params before sending
@@ -380,7 +406,7 @@ func (a *Client) GetPrivateWithdraw(params *GetPrivateWithdrawParams) (*GetPriva
 		Method:             "GET",
 		PathPattern:        "/private/withdraw",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateWithdrawReader{formats: a.formats},

@@ -39,7 +39,7 @@ var ErrTimeout = errors.New("timed out waiting for a response")
 type Exchange struct {
 	url    string
 	test   bool
-	client *client.Deribit
+	client *client.DeribitAPI
 	RPCCore
 }
 
@@ -135,7 +135,7 @@ func (e *Exchange) Reconnect(core *RPCCore) {
 }
 
 // Client returns an initialised API client
-func (e *Exchange) Client() *client.Deribit {
+func (e *Exchange) Client() *client.DeribitAPI {
 	if e.client == nil {
 		e.client = client.New(e, strfmt.Default)
 	}

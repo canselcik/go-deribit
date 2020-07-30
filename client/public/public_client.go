@@ -9,12 +9,11 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new public API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -26,10 +25,41 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-/*
-GetPublicAuth authenticates
+// ClientService is the interface for Client methods
+type ClientService interface {
+	GetPublicAuth(params *GetPublicAuthParams) (*GetPublicAuthOK, error)
 
-Retrieve an Oauth access token, to be used for authentication of 'private' requests.
+	GetPublicGetContractSize(params *GetPublicGetContractSizeParams) (*GetPublicGetContractSizeOK, error)
+
+	GetPublicGetCurrencies(params *GetPublicGetCurrenciesParams) (*GetPublicGetCurrenciesOK, error)
+
+	GetPublicGetFundingChartData(params *GetPublicGetFundingChartDataParams) (*GetPublicGetFundingChartDataOK, error)
+
+	GetPublicGetHistoricalVolatility(params *GetPublicGetHistoricalVolatilityParams) (*GetPublicGetHistoricalVolatilityOK, error)
+
+	GetPublicGetInstruments(params *GetPublicGetInstrumentsParams) (*GetPublicGetInstrumentsOK, error)
+
+	GetPublicGetTradingviewChartData(params *GetPublicGetTradingviewChartDataParams) (*GetPublicGetTradingviewChartDataOK, error)
+
+	GetPublicHello(params *GetPublicHelloParams) (*GetPublicHelloOK, error)
+
+	GetPublicSetHeartbeat(params *GetPublicSetHeartbeatParams) (*GetPublicSetHeartbeatOK, error)
+
+	GetPublicSubscribe(params *GetPublicSubscribeParams) (*GetPublicSubscribeOK, error)
+
+	GetPublicTest(params *GetPublicTestParams) (*GetPublicTestOK, error)
+
+	GetPublicTicker(params *GetPublicTickerParams) (*GetPublicTickerOK, error)
+
+	GetPublicValidateField(params *GetPublicValidateFieldParams) (*GetPublicValidateFieldOK, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  GetPublicAuth authenticates
+
+  Retrieve an Oauth access token, to be used for authentication of 'private' requests.
 
 Three methods of authentication are supported:
 
@@ -53,7 +83,7 @@ func (a *Client) GetPublicAuth(params *GetPublicAuthParams) (*GetPublicAuthOK, e
 		Method:             "GET",
 		PathPattern:        "/public/auth",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicAuthReader{formats: a.formats},
@@ -74,7 +104,7 @@ func (a *Client) GetPublicAuth(params *GetPublicAuthParams) (*GetPublicAuthOK, e
 }
 
 /*
-GetPublicGetContractSize retrieves contract size of provided instrument
+  GetPublicGetContractSize retrieves contract size of provided instrument
 */
 func (a *Client) GetPublicGetContractSize(params *GetPublicGetContractSizeParams) (*GetPublicGetContractSizeOK, error) {
 	// TODO: Validate the params before sending
@@ -87,7 +117,7 @@ func (a *Client) GetPublicGetContractSize(params *GetPublicGetContractSizeParams
 		Method:             "GET",
 		PathPattern:        "/public/get_contract_size",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetContractSizeReader{formats: a.formats},
@@ -108,7 +138,7 @@ func (a *Client) GetPublicGetContractSize(params *GetPublicGetContractSizeParams
 }
 
 /*
-GetPublicGetCurrencies retrieves all cryptocurrencies supported by the API
+  GetPublicGetCurrencies retrieves all cryptocurrencies supported by the API
 */
 func (a *Client) GetPublicGetCurrencies(params *GetPublicGetCurrenciesParams) (*GetPublicGetCurrenciesOK, error) {
 	// TODO: Validate the params before sending
@@ -121,7 +151,7 @@ func (a *Client) GetPublicGetCurrencies(params *GetPublicGetCurrenciesParams) (*
 		Method:             "GET",
 		PathPattern:        "/public/get_currencies",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetCurrenciesReader{formats: a.formats},
@@ -142,7 +172,7 @@ func (a *Client) GetPublicGetCurrencies(params *GetPublicGetCurrenciesParams) (*
 }
 
 /*
-GetPublicGetFundingChartData retrieves the latest user trades that have occurred for p e r p e t u a l instruments in a specific currency symbol and within given time range
+  GetPublicGetFundingChartData retrieves the latest user trades that have occurred for p e r p e t u a l instruments in a specific currency symbol and within given time range
 */
 func (a *Client) GetPublicGetFundingChartData(params *GetPublicGetFundingChartDataParams) (*GetPublicGetFundingChartDataOK, error) {
 	// TODO: Validate the params before sending
@@ -155,7 +185,7 @@ func (a *Client) GetPublicGetFundingChartData(params *GetPublicGetFundingChartDa
 		Method:             "GET",
 		PathPattern:        "/public/get_funding_chart_data",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetFundingChartDataReader{formats: a.formats},
@@ -176,7 +206,7 @@ func (a *Client) GetPublicGetFundingChartData(params *GetPublicGetFundingChartDa
 }
 
 /*
-GetPublicGetHistoricalVolatility provides information about historical volatility for given cryptocurrency
+  GetPublicGetHistoricalVolatility provides information about historical volatility for given cryptocurrency
 */
 func (a *Client) GetPublicGetHistoricalVolatility(params *GetPublicGetHistoricalVolatilityParams) (*GetPublicGetHistoricalVolatilityOK, error) {
 	// TODO: Validate the params before sending
@@ -189,7 +219,7 @@ func (a *Client) GetPublicGetHistoricalVolatility(params *GetPublicGetHistorical
 		Method:             "GET",
 		PathPattern:        "/public/get_historical_volatility",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetHistoricalVolatilityReader{formats: a.formats},
@@ -210,7 +240,7 @@ func (a *Client) GetPublicGetHistoricalVolatility(params *GetPublicGetHistorical
 }
 
 /*
-GetPublicGetInstruments retrieves available trading instruments this method can be used to see which instruments are available for trading or which instruments have existed historically
+  GetPublicGetInstruments retrieves available trading instruments this method can be used to see which instruments are available for trading or which instruments have existed historically
 */
 func (a *Client) GetPublicGetInstruments(params *GetPublicGetInstrumentsParams) (*GetPublicGetInstrumentsOK, error) {
 	// TODO: Validate the params before sending
@@ -223,7 +253,7 @@ func (a *Client) GetPublicGetInstruments(params *GetPublicGetInstrumentsParams) 
 		Method:             "GET",
 		PathPattern:        "/public/get_instruments",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetInstrumentsReader{formats: a.formats},
@@ -244,7 +274,7 @@ func (a *Client) GetPublicGetInstruments(params *GetPublicGetInstrumentsParams) 
 }
 
 /*
-GetPublicGetTradingviewChartData publiclies available market data used to generate a trading view candle chart
+  GetPublicGetTradingviewChartData publiclies available market data used to generate a trading view candle chart
 */
 func (a *Client) GetPublicGetTradingviewChartData(params *GetPublicGetTradingviewChartDataParams) (*GetPublicGetTradingviewChartDataOK, error) {
 	// TODO: Validate the params before sending
@@ -257,7 +287,7 @@ func (a *Client) GetPublicGetTradingviewChartData(params *GetPublicGetTradingvie
 		Method:             "GET",
 		PathPattern:        "/public/get_tradingview_chart_data",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetTradingviewChartDataReader{formats: a.formats},
@@ -278,7 +308,7 @@ func (a *Client) GetPublicGetTradingviewChartData(params *GetPublicGetTradingvie
 }
 
 /*
-GetPublicHello methods used to introduce the client software connected to deribit platform over websocket provided data may have an impact on the maintained connection and will be collected for internal statistical purposes in response deribit will also introduce itself
+  GetPublicHello methods used to introduce the client software connected to deribit platform over websocket provided data may have an impact on the maintained connection and will be collected for internal statistical purposes in response deribit will also introduce itself
 */
 func (a *Client) GetPublicHello(params *GetPublicHelloParams) (*GetPublicHelloOK, error) {
 	// TODO: Validate the params before sending
@@ -291,7 +321,7 @@ func (a *Client) GetPublicHello(params *GetPublicHelloParams) (*GetPublicHelloOK
 		Method:             "GET",
 		PathPattern:        "/public/hello",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicHelloReader{formats: a.formats},
@@ -312,7 +342,7 @@ func (a *Client) GetPublicHello(params *GetPublicHelloParams) (*GetPublicHelloOK
 }
 
 /*
-GetPublicSetHeartbeat signals the websocket connection to send and request heartbeats heartbeats can be used to detect stale connections when heartbeats have been set up the API server will send heartbeat messages and test request messages your software should respond to test request messages by sending a api v2 public test request if your software fails to do so the API server will immediately close the connection if your account is configured to cancel on disconnect any orders opened over the connection will be cancelled
+  GetPublicSetHeartbeat signals the websocket connection to send and request heartbeats heartbeats can be used to detect stale connections when heartbeats have been set up the API server will send heartbeat messages and test request messages your software should respond to test request messages by sending a api v2 public test request if your software fails to do so the API server will immediately close the connection if your account is configured to cancel on disconnect any orders opened over the connection will be cancelled
 */
 func (a *Client) GetPublicSetHeartbeat(params *GetPublicSetHeartbeatParams) (*GetPublicSetHeartbeatOK, error) {
 	// TODO: Validate the params before sending
@@ -325,7 +355,7 @@ func (a *Client) GetPublicSetHeartbeat(params *GetPublicSetHeartbeatParams) (*Ge
 		Method:             "GET",
 		PathPattern:        "/public/set_heartbeat",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicSetHeartbeatReader{formats: a.formats},
@@ -346,9 +376,9 @@ func (a *Client) GetPublicSetHeartbeat(params *GetPublicSetHeartbeatParams) (*Ge
 }
 
 /*
-GetPublicSubscribe subscribes to one or more channels
+  GetPublicSubscribe subscribes to one or more channels
 
-Subscribe to one or more channels.
+  Subscribe to one or more channels.
 
 This is the same method as [/private/subscribe](#private_subscribe), but it can only
 be used for 'public' channels.
@@ -365,7 +395,7 @@ func (a *Client) GetPublicSubscribe(params *GetPublicSubscribeParams) (*GetPubli
 		Method:             "GET",
 		PathPattern:        "/public/subscribe",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicSubscribeReader{formats: a.formats},
@@ -386,7 +416,7 @@ func (a *Client) GetPublicSubscribe(params *GetPublicSubscribeParams) (*GetPubli
 }
 
 /*
-GetPublicTest tests the connection to the API server and returns its version you can use this to make sure the API is reachable and matches the expected version
+  GetPublicTest tests the connection to the API server and returns its version you can use this to make sure the API is reachable and matches the expected version
 */
 func (a *Client) GetPublicTest(params *GetPublicTestParams) (*GetPublicTestOK, error) {
 	// TODO: Validate the params before sending
@@ -399,7 +429,7 @@ func (a *Client) GetPublicTest(params *GetPublicTestParams) (*GetPublicTestOK, e
 		Method:             "GET",
 		PathPattern:        "/public/test",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicTestReader{formats: a.formats},
@@ -420,7 +450,7 @@ func (a *Client) GetPublicTest(params *GetPublicTestParams) (*GetPublicTestOK, e
 }
 
 /*
-GetPublicTicker gets ticker for an instrument
+  GetPublicTicker gets ticker for an instrument
 */
 func (a *Client) GetPublicTicker(params *GetPublicTickerParams) (*GetPublicTickerOK, error) {
 	// TODO: Validate the params before sending
@@ -433,7 +463,7 @@ func (a *Client) GetPublicTicker(params *GetPublicTickerParams) (*GetPublicTicke
 		Method:             "GET",
 		PathPattern:        "/public/ticker",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicTickerReader{formats: a.formats},
@@ -454,7 +484,7 @@ func (a *Client) GetPublicTicker(params *GetPublicTickerParams) (*GetPublicTicke
 }
 
 /*
-GetPublicValidateField methods used to introduce the client software connected to deribit platform over websocket provided data may have an impact on the maintained connection and will be collected for internal statistical purposes in response deribit will also introduce itself
+  GetPublicValidateField methods used to introduce the client software connected to deribit platform over websocket provided data may have an impact on the maintained connection and will be collected for internal statistical purposes in response deribit will also introduce itself
 */
 func (a *Client) GetPublicValidateField(params *GetPublicValidateFieldParams) (*GetPublicValidateFieldOK, error) {
 	// TODO: Validate the params before sending
@@ -467,7 +497,7 @@ func (a *Client) GetPublicValidateField(params *GetPublicValidateFieldParams) (*
 		Method:             "GET",
 		PathPattern:        "/public/validate_field",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicValidateFieldReader{formats: a.formats},

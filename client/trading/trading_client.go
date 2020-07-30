@@ -9,12 +9,11 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new trading API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -26,8 +25,53 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	GetPrivateCancel(params *GetPrivateCancelParams) (*GetPrivateCancelOK, error)
+
+	GetPrivateCancelAll(params *GetPrivateCancelAllParams) (*GetPrivateCancelAllOK, error)
+
+	GetPrivateCancelAllByCurrency(params *GetPrivateCancelAllByCurrencyParams) (*GetPrivateCancelAllByCurrencyOK, error)
+
+	GetPrivateCancelAllByInstrument(params *GetPrivateCancelAllByInstrumentParams) (*GetPrivateCancelAllByInstrumentOK, error)
+
+	GetPrivateCancelByLabel(params *GetPrivateCancelByLabelParams) (*GetPrivateCancelByLabelOK, error)
+
+	GetPrivateEdit(params *GetPrivateEditParams) (*GetPrivateEditOK, error)
+
+	GetPrivateGetMargins(params *GetPrivateGetMarginsParams) (*GetPrivateGetMarginsOK, error)
+
+	GetPrivateGetOpenOrdersByCurrency(params *GetPrivateGetOpenOrdersByCurrencyParams) (*GetPrivateGetOpenOrdersByCurrencyOK, error)
+
+	GetPrivateGetOpenOrdersByInstrument(params *GetPrivateGetOpenOrdersByInstrumentParams) (*GetPrivateGetOpenOrdersByInstrumentOK, error)
+
+	GetPrivateGetOrderHistoryByCurrency(params *GetPrivateGetOrderHistoryByCurrencyParams) (*GetPrivateGetOrderHistoryByCurrencyOK, error)
+
+	GetPrivateGetOrderHistoryByInstrument(params *GetPrivateGetOrderHistoryByInstrumentParams) (*GetPrivateGetOrderHistoryByInstrumentOK, error)
+
+	GetPrivateGetOrderMarginByIds(params *GetPrivateGetOrderMarginByIdsParams) (*GetPrivateGetOrderMarginByIdsOK, error)
+
+	GetPrivateGetSettlementHistoryByCurrency(params *GetPrivateGetSettlementHistoryByCurrencyParams) (*GetPrivateGetSettlementHistoryByCurrencyOK, error)
+
+	GetPrivateGetSettlementHistoryByInstrument(params *GetPrivateGetSettlementHistoryByInstrumentParams) (*GetPrivateGetSettlementHistoryByInstrumentOK, error)
+
+	GetPrivateGetStopOrderHistory(params *GetPrivateGetStopOrderHistoryParams) (*GetPrivateGetStopOrderHistoryOK, error)
+
+	GetPrivateGetUserTradesByCurrency(params *GetPrivateGetUserTradesByCurrencyParams) (*GetPrivateGetUserTradesByCurrencyOK, error)
+
+	GetPrivateGetUserTradesByCurrencyAndTime(params *GetPrivateGetUserTradesByCurrencyAndTimeParams) (*GetPrivateGetUserTradesByCurrencyAndTimeOK, error)
+
+	GetPrivateGetUserTradesByInstrument(params *GetPrivateGetUserTradesByInstrumentParams) (*GetPrivateGetUserTradesByInstrumentOK, error)
+
+	GetPrivateGetUserTradesByInstrumentAndTime(params *GetPrivateGetUserTradesByInstrumentAndTimeParams) (*GetPrivateGetUserTradesByInstrumentAndTimeOK, error)
+
+	GetPrivateGetUserTradesByOrder(params *GetPrivateGetUserTradesByOrderParams) (*GetPrivateGetUserTradesByOrderOK, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-GetPrivateCancel cancels an order specified by order id
+  GetPrivateCancel cancels an order specified by order id
 */
 func (a *Client) GetPrivateCancel(params *GetPrivateCancelParams) (*GetPrivateCancelOK, error) {
 	// TODO: Validate the params before sending
@@ -40,7 +84,7 @@ func (a *Client) GetPrivateCancel(params *GetPrivateCancelParams) (*GetPrivateCa
 		Method:             "GET",
 		PathPattern:        "/private/cancel",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateCancelReader{formats: a.formats},
@@ -61,7 +105,7 @@ func (a *Client) GetPrivateCancel(params *GetPrivateCancelParams) (*GetPrivateCa
 }
 
 /*
-GetPrivateCancelAll this method cancels all users orders and stop orders within all currencies and instrument kinds
+  GetPrivateCancelAll this method cancels all users orders and stop orders within all currencies and instrument kinds
 */
 func (a *Client) GetPrivateCancelAll(params *GetPrivateCancelAllParams) (*GetPrivateCancelAllOK, error) {
 	// TODO: Validate the params before sending
@@ -74,7 +118,7 @@ func (a *Client) GetPrivateCancelAll(params *GetPrivateCancelAllParams) (*GetPri
 		Method:             "GET",
 		PathPattern:        "/private/cancel_all",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateCancelAllReader{formats: a.formats},
@@ -95,7 +139,7 @@ func (a *Client) GetPrivateCancelAll(params *GetPrivateCancelAllParams) (*GetPri
 }
 
 /*
-GetPrivateCancelAllByCurrency cancels all orders by currency optionally filtered by instrument kind and or order type
+  GetPrivateCancelAllByCurrency cancels all orders by currency optionally filtered by instrument kind and or order type
 */
 func (a *Client) GetPrivateCancelAllByCurrency(params *GetPrivateCancelAllByCurrencyParams) (*GetPrivateCancelAllByCurrencyOK, error) {
 	// TODO: Validate the params before sending
@@ -108,7 +152,7 @@ func (a *Client) GetPrivateCancelAllByCurrency(params *GetPrivateCancelAllByCurr
 		Method:             "GET",
 		PathPattern:        "/private/cancel_all_by_currency",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateCancelAllByCurrencyReader{formats: a.formats},
@@ -129,7 +173,7 @@ func (a *Client) GetPrivateCancelAllByCurrency(params *GetPrivateCancelAllByCurr
 }
 
 /*
-GetPrivateCancelAllByInstrument cancels all orders by instrument optionally filtered by order type
+  GetPrivateCancelAllByInstrument cancels all orders by instrument optionally filtered by order type
 */
 func (a *Client) GetPrivateCancelAllByInstrument(params *GetPrivateCancelAllByInstrumentParams) (*GetPrivateCancelAllByInstrumentOK, error) {
 	// TODO: Validate the params before sending
@@ -142,7 +186,7 @@ func (a *Client) GetPrivateCancelAllByInstrument(params *GetPrivateCancelAllByIn
 		Method:             "GET",
 		PathPattern:        "/private/cancel_all_by_instrument",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateCancelAllByInstrumentReader{formats: a.formats},
@@ -163,7 +207,7 @@ func (a *Client) GetPrivateCancelAllByInstrument(params *GetPrivateCancelAllByIn
 }
 
 /*
-GetPrivateCancelByLabel cancels an order specified by order label
+  GetPrivateCancelByLabel cancels an order specified by order label
 */
 func (a *Client) GetPrivateCancelByLabel(params *GetPrivateCancelByLabelParams) (*GetPrivateCancelByLabelOK, error) {
 	// TODO: Validate the params before sending
@@ -176,7 +220,7 @@ func (a *Client) GetPrivateCancelByLabel(params *GetPrivateCancelByLabelParams) 
 		Method:             "GET",
 		PathPattern:        "/private/cancel_by_label",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateCancelByLabelReader{formats: a.formats},
@@ -197,7 +241,7 @@ func (a *Client) GetPrivateCancelByLabel(params *GetPrivateCancelByLabelParams) 
 }
 
 /*
-GetPrivateEdit changes price amount and or other properties of an order
+  GetPrivateEdit changes price amount and or other properties of an order
 */
 func (a *Client) GetPrivateEdit(params *GetPrivateEditParams) (*GetPrivateEditOK, error) {
 	// TODO: Validate the params before sending
@@ -210,7 +254,7 @@ func (a *Client) GetPrivateEdit(params *GetPrivateEditParams) (*GetPrivateEditOK
 		Method:             "GET",
 		PathPattern:        "/private/edit",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateEditReader{formats: a.formats},
@@ -231,7 +275,7 @@ func (a *Client) GetPrivateEdit(params *GetPrivateEditParams) (*GetPrivateEditOK
 }
 
 /*
-GetPrivateGetMargins gets margins for given instrument amount and price
+  GetPrivateGetMargins gets margins for given instrument amount and price
 */
 func (a *Client) GetPrivateGetMargins(params *GetPrivateGetMarginsParams) (*GetPrivateGetMarginsOK, error) {
 	// TODO: Validate the params before sending
@@ -244,7 +288,7 @@ func (a *Client) GetPrivateGetMargins(params *GetPrivateGetMarginsParams) (*GetP
 		Method:             "GET",
 		PathPattern:        "/private/get_margins",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetMarginsReader{formats: a.formats},
@@ -265,7 +309,7 @@ func (a *Client) GetPrivateGetMargins(params *GetPrivateGetMarginsParams) (*GetP
 }
 
 /*
-GetPrivateGetOpenOrdersByCurrency retrieves list of user s open orders
+  GetPrivateGetOpenOrdersByCurrency retrieves list of user s open orders
 */
 func (a *Client) GetPrivateGetOpenOrdersByCurrency(params *GetPrivateGetOpenOrdersByCurrencyParams) (*GetPrivateGetOpenOrdersByCurrencyOK, error) {
 	// TODO: Validate the params before sending
@@ -278,7 +322,7 @@ func (a *Client) GetPrivateGetOpenOrdersByCurrency(params *GetPrivateGetOpenOrde
 		Method:             "GET",
 		PathPattern:        "/private/get_open_orders_by_currency",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetOpenOrdersByCurrencyReader{formats: a.formats},
@@ -299,7 +343,7 @@ func (a *Client) GetPrivateGetOpenOrdersByCurrency(params *GetPrivateGetOpenOrde
 }
 
 /*
-GetPrivateGetOpenOrdersByInstrument retrieves list of user s open orders within given instrument
+  GetPrivateGetOpenOrdersByInstrument retrieves list of user s open orders within given instrument
 */
 func (a *Client) GetPrivateGetOpenOrdersByInstrument(params *GetPrivateGetOpenOrdersByInstrumentParams) (*GetPrivateGetOpenOrdersByInstrumentOK, error) {
 	// TODO: Validate the params before sending
@@ -312,7 +356,7 @@ func (a *Client) GetPrivateGetOpenOrdersByInstrument(params *GetPrivateGetOpenOr
 		Method:             "GET",
 		PathPattern:        "/private/get_open_orders_by_instrument",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetOpenOrdersByInstrumentReader{formats: a.formats},
@@ -333,7 +377,7 @@ func (a *Client) GetPrivateGetOpenOrdersByInstrument(params *GetPrivateGetOpenOr
 }
 
 /*
-GetPrivateGetOrderHistoryByCurrency retrieves history of orders that have been partially or fully filled
+  GetPrivateGetOrderHistoryByCurrency retrieves history of orders that have been partially or fully filled
 */
 func (a *Client) GetPrivateGetOrderHistoryByCurrency(params *GetPrivateGetOrderHistoryByCurrencyParams) (*GetPrivateGetOrderHistoryByCurrencyOK, error) {
 	// TODO: Validate the params before sending
@@ -346,7 +390,7 @@ func (a *Client) GetPrivateGetOrderHistoryByCurrency(params *GetPrivateGetOrderH
 		Method:             "GET",
 		PathPattern:        "/private/get_order_history_by_currency",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetOrderHistoryByCurrencyReader{formats: a.formats},
@@ -367,7 +411,7 @@ func (a *Client) GetPrivateGetOrderHistoryByCurrency(params *GetPrivateGetOrderH
 }
 
 /*
-GetPrivateGetOrderHistoryByInstrument retrieves history of orders that have been partially or fully filled
+  GetPrivateGetOrderHistoryByInstrument retrieves history of orders that have been partially or fully filled
 */
 func (a *Client) GetPrivateGetOrderHistoryByInstrument(params *GetPrivateGetOrderHistoryByInstrumentParams) (*GetPrivateGetOrderHistoryByInstrumentOK, error) {
 	// TODO: Validate the params before sending
@@ -380,7 +424,7 @@ func (a *Client) GetPrivateGetOrderHistoryByInstrument(params *GetPrivateGetOrde
 		Method:             "GET",
 		PathPattern:        "/private/get_order_history_by_instrument",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetOrderHistoryByInstrumentReader{formats: a.formats},
@@ -401,7 +445,7 @@ func (a *Client) GetPrivateGetOrderHistoryByInstrument(params *GetPrivateGetOrde
 }
 
 /*
-GetPrivateGetOrderMarginByIds retrieves initial margins of given orders
+  GetPrivateGetOrderMarginByIds retrieves initial margins of given orders
 */
 func (a *Client) GetPrivateGetOrderMarginByIds(params *GetPrivateGetOrderMarginByIdsParams) (*GetPrivateGetOrderMarginByIdsOK, error) {
 	// TODO: Validate the params before sending
@@ -414,7 +458,7 @@ func (a *Client) GetPrivateGetOrderMarginByIds(params *GetPrivateGetOrderMarginB
 		Method:             "GET",
 		PathPattern:        "/private/get_order_margin_by_ids",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetOrderMarginByIdsReader{formats: a.formats},
@@ -435,7 +479,7 @@ func (a *Client) GetPrivateGetOrderMarginByIds(params *GetPrivateGetOrderMarginB
 }
 
 /*
-GetPrivateGetSettlementHistoryByCurrency retrieves settlement delivery and bankruptcy events that have affected your account
+  GetPrivateGetSettlementHistoryByCurrency retrieves settlement delivery and bankruptcy events that have affected your account
 */
 func (a *Client) GetPrivateGetSettlementHistoryByCurrency(params *GetPrivateGetSettlementHistoryByCurrencyParams) (*GetPrivateGetSettlementHistoryByCurrencyOK, error) {
 	// TODO: Validate the params before sending
@@ -448,7 +492,7 @@ func (a *Client) GetPrivateGetSettlementHistoryByCurrency(params *GetPrivateGetS
 		Method:             "GET",
 		PathPattern:        "/private/get_settlement_history_by_currency",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetSettlementHistoryByCurrencyReader{formats: a.formats},
@@ -469,7 +513,7 @@ func (a *Client) GetPrivateGetSettlementHistoryByCurrency(params *GetPrivateGetS
 }
 
 /*
-GetPrivateGetSettlementHistoryByInstrument retrieves public settlement delivery and bankruptcy events filtered by instrument name
+  GetPrivateGetSettlementHistoryByInstrument retrieves public settlement delivery and bankruptcy events filtered by instrument name
 */
 func (a *Client) GetPrivateGetSettlementHistoryByInstrument(params *GetPrivateGetSettlementHistoryByInstrumentParams) (*GetPrivateGetSettlementHistoryByInstrumentOK, error) {
 	// TODO: Validate the params before sending
@@ -482,7 +526,7 @@ func (a *Client) GetPrivateGetSettlementHistoryByInstrument(params *GetPrivateGe
 		Method:             "GET",
 		PathPattern:        "/private/get_settlement_history_by_instrument",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetSettlementHistoryByInstrumentReader{formats: a.formats},
@@ -503,7 +547,7 @@ func (a *Client) GetPrivateGetSettlementHistoryByInstrument(params *GetPrivateGe
 }
 
 /*
-GetPrivateGetStopOrderHistory retrieves detailed log of the user s stop orders
+  GetPrivateGetStopOrderHistory retrieves detailed log of the user s stop orders
 */
 func (a *Client) GetPrivateGetStopOrderHistory(params *GetPrivateGetStopOrderHistoryParams) (*GetPrivateGetStopOrderHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -516,7 +560,7 @@ func (a *Client) GetPrivateGetStopOrderHistory(params *GetPrivateGetStopOrderHis
 		Method:             "GET",
 		PathPattern:        "/private/get_stop_order_history",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetStopOrderHistoryReader{formats: a.formats},
@@ -537,7 +581,7 @@ func (a *Client) GetPrivateGetStopOrderHistory(params *GetPrivateGetStopOrderHis
 }
 
 /*
-GetPrivateGetUserTradesByCurrency retrieves the latest user trades that have occurred for instruments in a specific currency symbol
+  GetPrivateGetUserTradesByCurrency retrieves the latest user trades that have occurred for instruments in a specific currency symbol
 */
 func (a *Client) GetPrivateGetUserTradesByCurrency(params *GetPrivateGetUserTradesByCurrencyParams) (*GetPrivateGetUserTradesByCurrencyOK, error) {
 	// TODO: Validate the params before sending
@@ -550,7 +594,7 @@ func (a *Client) GetPrivateGetUserTradesByCurrency(params *GetPrivateGetUserTrad
 		Method:             "GET",
 		PathPattern:        "/private/get_user_trades_by_currency",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetUserTradesByCurrencyReader{formats: a.formats},
@@ -571,7 +615,7 @@ func (a *Client) GetPrivateGetUserTradesByCurrency(params *GetPrivateGetUserTrad
 }
 
 /*
-GetPrivateGetUserTradesByCurrencyAndTime retrieves the latest user trades that have occurred for instruments in a specific currency symbol and within given time range
+  GetPrivateGetUserTradesByCurrencyAndTime retrieves the latest user trades that have occurred for instruments in a specific currency symbol and within given time range
 */
 func (a *Client) GetPrivateGetUserTradesByCurrencyAndTime(params *GetPrivateGetUserTradesByCurrencyAndTimeParams) (*GetPrivateGetUserTradesByCurrencyAndTimeOK, error) {
 	// TODO: Validate the params before sending
@@ -584,7 +628,7 @@ func (a *Client) GetPrivateGetUserTradesByCurrencyAndTime(params *GetPrivateGetU
 		Method:             "GET",
 		PathPattern:        "/private/get_user_trades_by_currency_and_time",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetUserTradesByCurrencyAndTimeReader{formats: a.formats},
@@ -605,7 +649,7 @@ func (a *Client) GetPrivateGetUserTradesByCurrencyAndTime(params *GetPrivateGetU
 }
 
 /*
-GetPrivateGetUserTradesByInstrument retrieves the latest user trades that have occurred for a specific instrument
+  GetPrivateGetUserTradesByInstrument retrieves the latest user trades that have occurred for a specific instrument
 */
 func (a *Client) GetPrivateGetUserTradesByInstrument(params *GetPrivateGetUserTradesByInstrumentParams) (*GetPrivateGetUserTradesByInstrumentOK, error) {
 	// TODO: Validate the params before sending
@@ -618,7 +662,7 @@ func (a *Client) GetPrivateGetUserTradesByInstrument(params *GetPrivateGetUserTr
 		Method:             "GET",
 		PathPattern:        "/private/get_user_trades_by_instrument",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetUserTradesByInstrumentReader{formats: a.formats},
@@ -639,7 +683,7 @@ func (a *Client) GetPrivateGetUserTradesByInstrument(params *GetPrivateGetUserTr
 }
 
 /*
-GetPrivateGetUserTradesByInstrumentAndTime retrieves the latest user trades that have occurred for a specific instrument and within given time range
+  GetPrivateGetUserTradesByInstrumentAndTime retrieves the latest user trades that have occurred for a specific instrument and within given time range
 */
 func (a *Client) GetPrivateGetUserTradesByInstrumentAndTime(params *GetPrivateGetUserTradesByInstrumentAndTimeParams) (*GetPrivateGetUserTradesByInstrumentAndTimeOK, error) {
 	// TODO: Validate the params before sending
@@ -652,7 +696,7 @@ func (a *Client) GetPrivateGetUserTradesByInstrumentAndTime(params *GetPrivateGe
 		Method:             "GET",
 		PathPattern:        "/private/get_user_trades_by_instrument_and_time",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetUserTradesByInstrumentAndTimeReader{formats: a.formats},
@@ -673,7 +717,7 @@ func (a *Client) GetPrivateGetUserTradesByInstrumentAndTime(params *GetPrivateGe
 }
 
 /*
-GetPrivateGetUserTradesByOrder retrieves the list of user trades that was created for given order
+  GetPrivateGetUserTradesByOrder retrieves the list of user trades that was created for given order
 */
 func (a *Client) GetPrivateGetUserTradesByOrder(params *GetPrivateGetUserTradesByOrderParams) (*GetPrivateGetUserTradesByOrderOK, error) {
 	// TODO: Validate the params before sending
@@ -686,7 +730,7 @@ func (a *Client) GetPrivateGetUserTradesByOrder(params *GetPrivateGetUserTradesB
 		Method:             "GET",
 		PathPattern:        "/private/get_user_trades_by_order",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetUserTradesByOrderReader{formats: a.formats},

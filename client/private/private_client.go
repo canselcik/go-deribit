@@ -9,12 +9,11 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new private API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -26,8 +25,51 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	GetPrivateBuy(params *GetPrivateBuyParams) (*GetPrivateBuyOK, error)
+
+	GetPrivateCancelTransferByID(params *GetPrivateCancelTransferByIDParams) (*GetPrivateCancelTransferByIDOK, error)
+
+	GetPrivateChangeSubaccountName(params *GetPrivateChangeSubaccountNameParams) (*GetPrivateChangeSubaccountNameOK, error)
+
+	GetPrivateClosePosition(params *GetPrivateClosePositionParams) (*GetPrivateClosePositionOK, error)
+
+	GetPrivateCreateSubaccount(params *GetPrivateCreateSubaccountParams) (*GetPrivateCreateSubaccountOK, error)
+
+	GetPrivateDisableTfaForSubaccount(params *GetPrivateDisableTfaForSubaccountParams) (*GetPrivateDisableTfaForSubaccountOK, error)
+
+	GetPrivateGetOrderState(params *GetPrivateGetOrderStateParams) (*GetPrivateGetOrderStateOK, error)
+
+	GetPrivateGetPosition(params *GetPrivateGetPositionParams) (*GetPrivateGetPositionOK, error)
+
+	GetPrivateGetPositions(params *GetPrivateGetPositionsParams) (*GetPrivateGetPositionsOK, error)
+
+	GetPrivateGetSubaccounts(params *GetPrivateGetSubaccountsParams) (*GetPrivateGetSubaccountsOK, error)
+
+	GetPrivateSell(params *GetPrivateSellParams) (*GetPrivateSellOK, error)
+
+	GetPrivateSetEmailForSubaccount(params *GetPrivateSetEmailForSubaccountParams) (*GetPrivateSetEmailForSubaccountOK, error)
+
+	GetPrivateSetPasswordForSubaccount(params *GetPrivateSetPasswordForSubaccountParams) (*GetPrivateSetPasswordForSubaccountOK, error)
+
+	GetPrivateSubmitTransferToSubaccount(params *GetPrivateSubmitTransferToSubaccountParams) (*GetPrivateSubmitTransferToSubaccountOK, error)
+
+	GetPrivateSubmitTransferToUser(params *GetPrivateSubmitTransferToUserParams) (*GetPrivateSubmitTransferToUserOK, error)
+
+	GetPrivateSubscribe(params *GetPrivateSubscribeParams) (*GetPrivateSubscribeOK, error)
+
+	GetPrivateToggleNotificationsFromSubaccount(params *GetPrivateToggleNotificationsFromSubaccountParams) (*GetPrivateToggleNotificationsFromSubaccountOK, error)
+
+	GetPrivateToggleSubaccountLogin(params *GetPrivateToggleSubaccountLoginParams) (*GetPrivateToggleSubaccountLoginOK, error)
+
+	GetPrivateUnsubscribe(params *GetPrivateUnsubscribeParams) (*GetPrivateUnsubscribeOK, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-GetPrivateBuy places a buy order for an instrument
+  GetPrivateBuy places a buy order for an instrument
 */
 func (a *Client) GetPrivateBuy(params *GetPrivateBuyParams) (*GetPrivateBuyOK, error) {
 	// TODO: Validate the params before sending
@@ -40,7 +82,7 @@ func (a *Client) GetPrivateBuy(params *GetPrivateBuyParams) (*GetPrivateBuyOK, e
 		Method:             "GET",
 		PathPattern:        "/private/buy",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateBuyReader{formats: a.formats},
@@ -61,7 +103,7 @@ func (a *Client) GetPrivateBuy(params *GetPrivateBuyParams) (*GetPrivateBuyOK, e
 }
 
 /*
-GetPrivateCancelTransferByID cancels transfer
+  GetPrivateCancelTransferByID cancels transfer
 */
 func (a *Client) GetPrivateCancelTransferByID(params *GetPrivateCancelTransferByIDParams) (*GetPrivateCancelTransferByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -74,7 +116,7 @@ func (a *Client) GetPrivateCancelTransferByID(params *GetPrivateCancelTransferBy
 		Method:             "GET",
 		PathPattern:        "/private/cancel_transfer_by_id",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateCancelTransferByIDReader{formats: a.formats},
@@ -95,7 +137,7 @@ func (a *Client) GetPrivateCancelTransferByID(params *GetPrivateCancelTransferBy
 }
 
 /*
-GetPrivateChangeSubaccountName changes the user name for a subaccount
+  GetPrivateChangeSubaccountName changes the user name for a subaccount
 */
 func (a *Client) GetPrivateChangeSubaccountName(params *GetPrivateChangeSubaccountNameParams) (*GetPrivateChangeSubaccountNameOK, error) {
 	// TODO: Validate the params before sending
@@ -108,7 +150,7 @@ func (a *Client) GetPrivateChangeSubaccountName(params *GetPrivateChangeSubaccou
 		Method:             "GET",
 		PathPattern:        "/private/change_subaccount_name",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateChangeSubaccountNameReader{formats: a.formats},
@@ -129,7 +171,7 @@ func (a *Client) GetPrivateChangeSubaccountName(params *GetPrivateChangeSubaccou
 }
 
 /*
-GetPrivateClosePosition makes closing position reduce only order
+  GetPrivateClosePosition makes closing position reduce only order
 */
 func (a *Client) GetPrivateClosePosition(params *GetPrivateClosePositionParams) (*GetPrivateClosePositionOK, error) {
 	// TODO: Validate the params before sending
@@ -142,7 +184,7 @@ func (a *Client) GetPrivateClosePosition(params *GetPrivateClosePositionParams) 
 		Method:             "GET",
 		PathPattern:        "/private/close_position",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateClosePositionReader{formats: a.formats},
@@ -163,7 +205,7 @@ func (a *Client) GetPrivateClosePosition(params *GetPrivateClosePositionParams) 
 }
 
 /*
-GetPrivateCreateSubaccount creates a new subaccount
+  GetPrivateCreateSubaccount creates a new subaccount
 */
 func (a *Client) GetPrivateCreateSubaccount(params *GetPrivateCreateSubaccountParams) (*GetPrivateCreateSubaccountOK, error) {
 	// TODO: Validate the params before sending
@@ -176,7 +218,7 @@ func (a *Client) GetPrivateCreateSubaccount(params *GetPrivateCreateSubaccountPa
 		Method:             "GET",
 		PathPattern:        "/private/create_subaccount",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateCreateSubaccountReader{formats: a.formats},
@@ -197,7 +239,7 @@ func (a *Client) GetPrivateCreateSubaccount(params *GetPrivateCreateSubaccountPa
 }
 
 /*
-GetPrivateDisableTfaForSubaccount disables two factor authentication for a subaccount
+  GetPrivateDisableTfaForSubaccount disables two factor authentication for a subaccount
 */
 func (a *Client) GetPrivateDisableTfaForSubaccount(params *GetPrivateDisableTfaForSubaccountParams) (*GetPrivateDisableTfaForSubaccountOK, error) {
 	// TODO: Validate the params before sending
@@ -210,7 +252,7 @@ func (a *Client) GetPrivateDisableTfaForSubaccount(params *GetPrivateDisableTfaF
 		Method:             "GET",
 		PathPattern:        "/private/disable_tfa_for_subaccount",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateDisableTfaForSubaccountReader{formats: a.formats},
@@ -231,7 +273,7 @@ func (a *Client) GetPrivateDisableTfaForSubaccount(params *GetPrivateDisableTfaF
 }
 
 /*
-GetPrivateGetOrderState retrieves the current state of an order
+  GetPrivateGetOrderState retrieves the current state of an order
 */
 func (a *Client) GetPrivateGetOrderState(params *GetPrivateGetOrderStateParams) (*GetPrivateGetOrderStateOK, error) {
 	// TODO: Validate the params before sending
@@ -244,7 +286,7 @@ func (a *Client) GetPrivateGetOrderState(params *GetPrivateGetOrderStateParams) 
 		Method:             "GET",
 		PathPattern:        "/private/get_order_state",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetOrderStateReader{formats: a.formats},
@@ -265,7 +307,7 @@ func (a *Client) GetPrivateGetOrderState(params *GetPrivateGetOrderStateParams) 
 }
 
 /*
-GetPrivateGetPosition retrieves user position
+  GetPrivateGetPosition retrieves user position
 */
 func (a *Client) GetPrivateGetPosition(params *GetPrivateGetPositionParams) (*GetPrivateGetPositionOK, error) {
 	// TODO: Validate the params before sending
@@ -278,7 +320,7 @@ func (a *Client) GetPrivateGetPosition(params *GetPrivateGetPositionParams) (*Ge
 		Method:             "GET",
 		PathPattern:        "/private/get_position",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetPositionReader{formats: a.formats},
@@ -299,7 +341,7 @@ func (a *Client) GetPrivateGetPosition(params *GetPrivateGetPositionParams) (*Ge
 }
 
 /*
-GetPrivateGetPositions retrieves user positions
+  GetPrivateGetPositions retrieves user positions
 */
 func (a *Client) GetPrivateGetPositions(params *GetPrivateGetPositionsParams) (*GetPrivateGetPositionsOK, error) {
 	// TODO: Validate the params before sending
@@ -312,7 +354,7 @@ func (a *Client) GetPrivateGetPositions(params *GetPrivateGetPositionsParams) (*
 		Method:             "GET",
 		PathPattern:        "/private/get_positions",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetPositionsReader{formats: a.formats},
@@ -333,7 +375,7 @@ func (a *Client) GetPrivateGetPositions(params *GetPrivateGetPositionsParams) (*
 }
 
 /*
-GetPrivateGetSubaccounts gets information about subaccounts
+  GetPrivateGetSubaccounts gets information about subaccounts
 */
 func (a *Client) GetPrivateGetSubaccounts(params *GetPrivateGetSubaccountsParams) (*GetPrivateGetSubaccountsOK, error) {
 	// TODO: Validate the params before sending
@@ -346,7 +388,7 @@ func (a *Client) GetPrivateGetSubaccounts(params *GetPrivateGetSubaccountsParams
 		Method:             "GET",
 		PathPattern:        "/private/get_subaccounts",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetSubaccountsReader{formats: a.formats},
@@ -367,7 +409,7 @@ func (a *Client) GetPrivateGetSubaccounts(params *GetPrivateGetSubaccountsParams
 }
 
 /*
-GetPrivateSell places a sell order for an instrument
+  GetPrivateSell places a sell order for an instrument
 */
 func (a *Client) GetPrivateSell(params *GetPrivateSellParams) (*GetPrivateSellOK, error) {
 	// TODO: Validate the params before sending
@@ -380,7 +422,7 @@ func (a *Client) GetPrivateSell(params *GetPrivateSellParams) (*GetPrivateSellOK
 		Method:             "GET",
 		PathPattern:        "/private/sell",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateSellReader{formats: a.formats},
@@ -401,7 +443,7 @@ func (a *Client) GetPrivateSell(params *GetPrivateSellParams) (*GetPrivateSellOK
 }
 
 /*
-GetPrivateSetEmailForSubaccount assigns an email address to a subaccount user will receive an email with confirmation link
+  GetPrivateSetEmailForSubaccount assigns an email address to a subaccount user will receive an email with confirmation link
 */
 func (a *Client) GetPrivateSetEmailForSubaccount(params *GetPrivateSetEmailForSubaccountParams) (*GetPrivateSetEmailForSubaccountOK, error) {
 	// TODO: Validate the params before sending
@@ -414,7 +456,7 @@ func (a *Client) GetPrivateSetEmailForSubaccount(params *GetPrivateSetEmailForSu
 		Method:             "GET",
 		PathPattern:        "/private/set_email_for_subaccount",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateSetEmailForSubaccountReader{formats: a.formats},
@@ -435,7 +477,7 @@ func (a *Client) GetPrivateSetEmailForSubaccount(params *GetPrivateSetEmailForSu
 }
 
 /*
-GetPrivateSetPasswordForSubaccount sets the password for the subaccount
+  GetPrivateSetPasswordForSubaccount sets the password for the subaccount
 */
 func (a *Client) GetPrivateSetPasswordForSubaccount(params *GetPrivateSetPasswordForSubaccountParams) (*GetPrivateSetPasswordForSubaccountOK, error) {
 	// TODO: Validate the params before sending
@@ -448,7 +490,7 @@ func (a *Client) GetPrivateSetPasswordForSubaccount(params *GetPrivateSetPasswor
 		Method:             "GET",
 		PathPattern:        "/private/set_password_for_subaccount",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateSetPasswordForSubaccountReader{formats: a.formats},
@@ -469,7 +511,7 @@ func (a *Client) GetPrivateSetPasswordForSubaccount(params *GetPrivateSetPasswor
 }
 
 /*
-GetPrivateSubmitTransferToSubaccount transfers funds to a subaccount
+  GetPrivateSubmitTransferToSubaccount transfers funds to a subaccount
 */
 func (a *Client) GetPrivateSubmitTransferToSubaccount(params *GetPrivateSubmitTransferToSubaccountParams) (*GetPrivateSubmitTransferToSubaccountOK, error) {
 	// TODO: Validate the params before sending
@@ -482,7 +524,7 @@ func (a *Client) GetPrivateSubmitTransferToSubaccount(params *GetPrivateSubmitTr
 		Method:             "GET",
 		PathPattern:        "/private/submit_transfer_to_subaccount",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateSubmitTransferToSubaccountReader{formats: a.formats},
@@ -503,7 +545,7 @@ func (a *Client) GetPrivateSubmitTransferToSubaccount(params *GetPrivateSubmitTr
 }
 
 /*
-GetPrivateSubmitTransferToUser transfers funds to a another user
+  GetPrivateSubmitTransferToUser transfers funds to a another user
 */
 func (a *Client) GetPrivateSubmitTransferToUser(params *GetPrivateSubmitTransferToUserParams) (*GetPrivateSubmitTransferToUserOK, error) {
 	// TODO: Validate the params before sending
@@ -516,7 +558,7 @@ func (a *Client) GetPrivateSubmitTransferToUser(params *GetPrivateSubmitTransfer
 		Method:             "GET",
 		PathPattern:        "/private/submit_transfer_to_user",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateSubmitTransferToUserReader{formats: a.formats},
@@ -537,9 +579,9 @@ func (a *Client) GetPrivateSubmitTransferToUser(params *GetPrivateSubmitTransfer
 }
 
 /*
-GetPrivateSubscribe subscribes to one or more channels
+  GetPrivateSubscribe subscribes to one or more channels
 
-Subscribe to one or more channels.
+  Subscribe to one or more channels.
 
 The name of the channel determines what information will be provided, and
 in what form.
@@ -556,7 +598,7 @@ func (a *Client) GetPrivateSubscribe(params *GetPrivateSubscribeParams) (*GetPri
 		Method:             "GET",
 		PathPattern:        "/private/subscribe",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateSubscribeReader{formats: a.formats},
@@ -577,7 +619,7 @@ func (a *Client) GetPrivateSubscribe(params *GetPrivateSubscribeParams) (*GetPri
 }
 
 /*
-GetPrivateToggleNotificationsFromSubaccount enables or disable sending of notifications for the subaccount
+  GetPrivateToggleNotificationsFromSubaccount enables or disable sending of notifications for the subaccount
 */
 func (a *Client) GetPrivateToggleNotificationsFromSubaccount(params *GetPrivateToggleNotificationsFromSubaccountParams) (*GetPrivateToggleNotificationsFromSubaccountOK, error) {
 	// TODO: Validate the params before sending
@@ -590,7 +632,7 @@ func (a *Client) GetPrivateToggleNotificationsFromSubaccount(params *GetPrivateT
 		Method:             "GET",
 		PathPattern:        "/private/toggle_notifications_from_subaccount",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateToggleNotificationsFromSubaccountReader{formats: a.formats},
@@ -611,7 +653,7 @@ func (a *Client) GetPrivateToggleNotificationsFromSubaccount(params *GetPrivateT
 }
 
 /*
-GetPrivateToggleSubaccountLogin enables or disable login for a subaccount if login is disabled and a session for the subaccount exists this session will be terminated
+  GetPrivateToggleSubaccountLogin enables or disable login for a subaccount if login is disabled and a session for the subaccount exists this session will be terminated
 */
 func (a *Client) GetPrivateToggleSubaccountLogin(params *GetPrivateToggleSubaccountLoginParams) (*GetPrivateToggleSubaccountLoginOK, error) {
 	// TODO: Validate the params before sending
@@ -624,7 +666,7 @@ func (a *Client) GetPrivateToggleSubaccountLogin(params *GetPrivateToggleSubacco
 		Method:             "GET",
 		PathPattern:        "/private/toggle_subaccount_login",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateToggleSubaccountLoginReader{formats: a.formats},
@@ -645,7 +687,7 @@ func (a *Client) GetPrivateToggleSubaccountLogin(params *GetPrivateToggleSubacco
 }
 
 /*
-GetPrivateUnsubscribe unsubscribes from one or more channels
+  GetPrivateUnsubscribe unsubscribes from one or more channels
 */
 func (a *Client) GetPrivateUnsubscribe(params *GetPrivateUnsubscribeParams) (*GetPrivateUnsubscribeOK, error) {
 	// TODO: Validate the params before sending
@@ -658,7 +700,7 @@ func (a *Client) GetPrivateUnsubscribe(params *GetPrivateUnsubscribeParams) (*Ge
 		Method:             "GET",
 		PathPattern:        "/private/unsubscribe",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateUnsubscribeReader{formats: a.formats},

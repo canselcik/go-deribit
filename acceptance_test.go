@@ -20,13 +20,13 @@ import (
 
 type testCase struct {
 	method string
-	f      func(*client.Deribit, []byte) ([]byte, error)
+	f      func(*client.DeribitAPI, []byte) ([]byte, error)
 }
 
 var publicMethods = []*testCase{
 	{
 		"DisableHeartbeat",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params websocket_only.GetPublicDisableHeartbeatParams
 			}{}
@@ -42,7 +42,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetAnnouncements",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params account_management.GetPublicGetAnnouncementsParams
 			}{}
@@ -58,7 +58,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetBookSummaryByCurrency",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params market_data.GetPublicGetBookSummaryByCurrencyParams
 			}{}
@@ -74,7 +74,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetBookSummaryByInstrument",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params market_data.GetPublicGetBookSummaryByInstrumentParams
 			}{}
@@ -90,7 +90,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetCurrencies",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params public.GetPublicGetCurrenciesParams
 			}{}
@@ -106,7 +106,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetHistoricalVolatility",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params public.GetPublicGetHistoricalVolatilityParams
 			}{}
@@ -122,7 +122,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetInstruments",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params public.GetPublicGetInstrumentsParams
 			}{}
@@ -138,7 +138,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetLastSettlementsByCurrency",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params market_data.GetPublicGetLastSettlementsByCurrencyParams
 			}{}
@@ -154,7 +154,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetLastSettlementsByInstrument",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params market_data.GetPublicGetLastSettlementsByInstrumentParams
 			}{}
@@ -170,7 +170,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetLastTradesByCurrency",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params market_data.GetPublicGetLastTradesByCurrencyParams
 			}{}
@@ -186,7 +186,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetLastTradesByCurrencyAndTime",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params market_data.GetPublicGetLastTradesByCurrencyAndTimeParams
 			}{}
@@ -202,7 +202,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetLastTradesByInstrument",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params market_data.GetPublicGetLastTradesByInstrumentParams
 			}{}
@@ -218,7 +218,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetLastTradesByInstrumentAndTime",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params market_data.GetPublicGetLastTradesByInstrumentAndTimeParams
 			}{}
@@ -234,7 +234,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetOrderBook",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params market_data.GetPublicGetOrderBookParams
 			}{}
@@ -250,7 +250,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetTime",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params supporting.GetPublicGetTimeParams
 			}{}
@@ -266,7 +266,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetTradeVolumes",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params market_data.GetPublicGetTradeVolumesParams
 			}{}
@@ -282,7 +282,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"GetTradingviewChartData",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params public.GetPublicGetTradingviewChartDataParams
 			}{}
@@ -298,7 +298,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"Hello",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params public.GetPublicHelloParams
 			}{}
@@ -314,7 +314,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"Test",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params public.GetPublicTestParams
 			}{}
@@ -330,7 +330,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"Ticker",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params public.GetPublicTickerParams
 			}{}
@@ -346,7 +346,7 @@ var publicMethods = []*testCase{
 	},
 	{
 		"Unsubscribe",
-		func(c *client.Deribit, req []byte) ([]byte, error) {
+		func(c *client.DeribitAPI, req []byte) ([]byte, error) {
 			var params = struct {
 				Params websocket_only.GetPublicUnsubscribeParams
 			}{}

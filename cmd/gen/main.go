@@ -104,14 +104,14 @@ func (e *Exchange) {{.FuncName}}({{.Args}}{{if .Args}} string{{end}}) (chan mode
 					if err := json.Unmarshal(data, &ret); err != nil {
 						e.errors <- fmt.Errorf("error decoding notification: %s", err)
 					}
-					out <- &ret
+					out <- ret
 				case '[': 
 					var rets []models.{{.Type}}
 					if err := json.Unmarshal(data, &rets); err != nil {
 						e.errors <- fmt.Errorf("error decoding notification: %s", err)
 					}
 					for _, ret := range rets {
-						out <- &ret
+						out <- ret
 					}
 				default:
 					e.errors <- fmt.Errorf("invalid json data: %s", string(data))

@@ -72,7 +72,7 @@
         "tags": [
           "wallet",
           "private",
-          "internals"
+          "internal"
         ],
         "summary": "Adds new entry to address book of given type"
       }
@@ -695,7 +695,7 @@
           }
         },
         "tags": [
-          "internals",
+          "internal",
           "private"
         ],
         "summary": "Disables TFA with one time recovery code"
@@ -880,7 +880,7 @@
         "tags": [
           "wallet",
           "private",
-          "internals"
+          "internal"
         ],
         "summary": "Retrieves address book of given type"
       }
@@ -2140,7 +2140,7 @@
         "tags": [
           "wallet",
           "private",
-          "internals"
+          "internal"
         ],
         "summary": "Adds new entry to address book of given type"
       }
@@ -2449,7 +2449,7 @@
         "tags": [
           "private",
           "wallet",
-          "internals"
+          "internal"
         ],
         "summary": "Transfer funds to a subaccount."
       }
@@ -2504,7 +2504,7 @@
         "tags": [
           "private",
           "wallet",
-          "internals"
+          "internal"
         ],
         "summary": "Transfer funds to a another user."
       }
@@ -2586,7 +2586,7 @@
         "tags": [
           "wallet",
           "private",
-          "internals"
+          "internal"
         ],
         "summary": "Enable or disable deposit address creation"
       }
@@ -3073,7 +3073,7 @@
           }
         },
         "tags": [
-          "internals"
+          "internal"
         ],
         "summary": "Get information to be displayed in the footer of the website."
       }
@@ -3696,7 +3696,7 @@
           }
         },
         "tags": [
-          "internals"
+          "internal"
         ],
         "summary": "Retrives market prices and its implied volatility of options instruments"
       }
@@ -4077,7 +4077,7 @@
         },
         "tags": [
           "public",
-          "internals"
+          "internal"
         ],
         "summary": "Method used to introduce the client software connected to Deribit platform over websocket. Provided data may have an impact on the maintained connection and will be collected for internal statistical purposes. In response, Deribit will also introduce itself."
       }
@@ -8553,7 +8553,7 @@
     },
     {
       "description": "Not intended for public use; do not include in publicly available documentation.",
-      "name": "internals"
+      "name": "internal"
     },
     {
       "name": "authentication"

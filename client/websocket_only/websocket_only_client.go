@@ -9,12 +9,11 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new websocket only API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -26,8 +25,23 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	GetPrivateDisableCancelOnDisconnect(params *GetPrivateDisableCancelOnDisconnectParams) (*GetPrivateDisableCancelOnDisconnectOK, error)
+
+	GetPrivateEnableCancelOnDisconnect(params *GetPrivateEnableCancelOnDisconnectParams) (*GetPrivateEnableCancelOnDisconnectOK, error)
+
+	GetPrivateLogout(params *GetPrivateLogoutParams) (*GetPrivateLogoutOK, error)
+
+	GetPublicDisableHeartbeat(params *GetPublicDisableHeartbeatParams) (*GetPublicDisableHeartbeatOK, error)
+
+	GetPublicUnsubscribe(params *GetPublicUnsubscribeParams) (*GetPublicUnsubscribeOK, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-GetPrivateDisableCancelOnDisconnect disables cancel on disconnect for the connection this does not change the default account setting
+  GetPrivateDisableCancelOnDisconnect disables cancel on disconnect for the connection this does not change the default account setting
 */
 func (a *Client) GetPrivateDisableCancelOnDisconnect(params *GetPrivateDisableCancelOnDisconnectParams) (*GetPrivateDisableCancelOnDisconnectOK, error) {
 	// TODO: Validate the params before sending
@@ -40,7 +54,7 @@ func (a *Client) GetPrivateDisableCancelOnDisconnect(params *GetPrivateDisableCa
 		Method:             "GET",
 		PathPattern:        "/private/disable_cancel_on_disconnect",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateDisableCancelOnDisconnectReader{formats: a.formats},
@@ -61,7 +75,7 @@ func (a *Client) GetPrivateDisableCancelOnDisconnect(params *GetPrivateDisableCa
 }
 
 /*
-GetPrivateEnableCancelOnDisconnect enables cancel on disconnect for the connection this does not change the default account setting after enabling cancel on disconnect all orders created by the connection will be removed when connection is closed br br n o t i c e it does not affect orders created by other connections they will remain active bang
+  GetPrivateEnableCancelOnDisconnect enables cancel on disconnect for the connection this does not change the default account setting after enabling cancel on disconnect all orders created by the connection will be removed when connection is closed br br n o t i c e it does not affect orders created by other connections they will remain active bang
 */
 func (a *Client) GetPrivateEnableCancelOnDisconnect(params *GetPrivateEnableCancelOnDisconnectParams) (*GetPrivateEnableCancelOnDisconnectOK, error) {
 	// TODO: Validate the params before sending
@@ -74,7 +88,7 @@ func (a *Client) GetPrivateEnableCancelOnDisconnect(params *GetPrivateEnableCanc
 		Method:             "GET",
 		PathPattern:        "/private/enable_cancel_on_disconnect",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateEnableCancelOnDisconnectReader{formats: a.formats},
@@ -95,7 +109,7 @@ func (a *Client) GetPrivateEnableCancelOnDisconnect(params *GetPrivateEnableCanc
 }
 
 /*
-GetPrivateLogout gracefullies close websocket connection when c o d cancel on disconnect is enabled orders are not cancelled
+  GetPrivateLogout gracefullies close websocket connection when c o d cancel on disconnect is enabled orders are not cancelled
 */
 func (a *Client) GetPrivateLogout(params *GetPrivateLogoutParams) (*GetPrivateLogoutOK, error) {
 	// TODO: Validate the params before sending
@@ -108,7 +122,7 @@ func (a *Client) GetPrivateLogout(params *GetPrivateLogoutParams) (*GetPrivateLo
 		Method:             "GET",
 		PathPattern:        "/private/logout",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateLogoutReader{formats: a.formats},
@@ -129,7 +143,7 @@ func (a *Client) GetPrivateLogout(params *GetPrivateLogoutParams) (*GetPrivateLo
 }
 
 /*
-GetPublicDisableHeartbeat stops sending heartbeat messages
+  GetPublicDisableHeartbeat stops sending heartbeat messages
 */
 func (a *Client) GetPublicDisableHeartbeat(params *GetPublicDisableHeartbeatParams) (*GetPublicDisableHeartbeatOK, error) {
 	// TODO: Validate the params before sending
@@ -142,7 +156,7 @@ func (a *Client) GetPublicDisableHeartbeat(params *GetPublicDisableHeartbeatPara
 		Method:             "GET",
 		PathPattern:        "/public/disable_heartbeat",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicDisableHeartbeatReader{formats: a.formats},
@@ -163,7 +177,7 @@ func (a *Client) GetPublicDisableHeartbeat(params *GetPublicDisableHeartbeatPara
 }
 
 /*
-GetPublicUnsubscribe unsubscribes from one or more channels
+  GetPublicUnsubscribe unsubscribes from one or more channels
 */
 func (a *Client) GetPublicUnsubscribe(params *GetPublicUnsubscribeParams) (*GetPublicUnsubscribeOK, error) {
 	// TODO: Validate the params before sending
@@ -176,7 +190,7 @@ func (a *Client) GetPublicUnsubscribe(params *GetPublicUnsubscribeParams) (*GetP
 		Method:             "GET",
 		PathPattern:        "/public/unsubscribe",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicUnsubscribeReader{formats: a.formats},

@@ -9,12 +9,11 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new account management API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -26,8 +25,25 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	GetPrivateGetAccountSummary(params *GetPrivateGetAccountSummaryParams) (*GetPrivateGetAccountSummaryOK, error)
+
+	GetPrivateGetEmailLanguage(params *GetPrivateGetEmailLanguageParams) (*GetPrivateGetEmailLanguageOK, error)
+
+	GetPrivateGetNewAnnouncements(params *GetPrivateGetNewAnnouncementsParams) (*GetPrivateGetNewAnnouncementsOK, error)
+
+	GetPrivateSetAnnouncementAsRead(params *GetPrivateSetAnnouncementAsReadParams) (*GetPrivateSetAnnouncementAsReadOK, error)
+
+	GetPrivateSetEmailLanguage(params *GetPrivateSetEmailLanguageParams) (*GetPrivateSetEmailLanguageOK, error)
+
+	GetPublicGetAnnouncements(params *GetPublicGetAnnouncementsParams) (*GetPublicGetAnnouncementsOK, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-GetPrivateGetAccountSummary retrieves user account summary
+  GetPrivateGetAccountSummary retrieves user account summary
 */
 func (a *Client) GetPrivateGetAccountSummary(params *GetPrivateGetAccountSummaryParams) (*GetPrivateGetAccountSummaryOK, error) {
 	// TODO: Validate the params before sending
@@ -40,7 +56,7 @@ func (a *Client) GetPrivateGetAccountSummary(params *GetPrivateGetAccountSummary
 		Method:             "GET",
 		PathPattern:        "/private/get_account_summary",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetAccountSummaryReader{formats: a.formats},
@@ -61,7 +77,7 @@ func (a *Client) GetPrivateGetAccountSummary(params *GetPrivateGetAccountSummary
 }
 
 /*
-GetPrivateGetEmailLanguage retrieves the language to be used for emails
+  GetPrivateGetEmailLanguage retrieves the language to be used for emails
 */
 func (a *Client) GetPrivateGetEmailLanguage(params *GetPrivateGetEmailLanguageParams) (*GetPrivateGetEmailLanguageOK, error) {
 	// TODO: Validate the params before sending
@@ -74,7 +90,7 @@ func (a *Client) GetPrivateGetEmailLanguage(params *GetPrivateGetEmailLanguagePa
 		Method:             "GET",
 		PathPattern:        "/private/get_email_language",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetEmailLanguageReader{formats: a.formats},
@@ -95,7 +111,7 @@ func (a *Client) GetPrivateGetEmailLanguage(params *GetPrivateGetEmailLanguagePa
 }
 
 /*
-GetPrivateGetNewAnnouncements retrieves announcements that have not been marked read by the user
+  GetPrivateGetNewAnnouncements retrieves announcements that have not been marked read by the user
 */
 func (a *Client) GetPrivateGetNewAnnouncements(params *GetPrivateGetNewAnnouncementsParams) (*GetPrivateGetNewAnnouncementsOK, error) {
 	// TODO: Validate the params before sending
@@ -108,7 +124,7 @@ func (a *Client) GetPrivateGetNewAnnouncements(params *GetPrivateGetNewAnnouncem
 		Method:             "GET",
 		PathPattern:        "/private/get_new_announcements",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateGetNewAnnouncementsReader{formats: a.formats},
@@ -129,7 +145,7 @@ func (a *Client) GetPrivateGetNewAnnouncements(params *GetPrivateGetNewAnnouncem
 }
 
 /*
-GetPrivateSetAnnouncementAsRead marks an announcement as read so it will not be shown in get new announcements
+  GetPrivateSetAnnouncementAsRead marks an announcement as read so it will not be shown in get new announcements
 */
 func (a *Client) GetPrivateSetAnnouncementAsRead(params *GetPrivateSetAnnouncementAsReadParams) (*GetPrivateSetAnnouncementAsReadOK, error) {
 	// TODO: Validate the params before sending
@@ -142,7 +158,7 @@ func (a *Client) GetPrivateSetAnnouncementAsRead(params *GetPrivateSetAnnounceme
 		Method:             "GET",
 		PathPattern:        "/private/set_announcement_as_read",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateSetAnnouncementAsReadReader{formats: a.formats},
@@ -163,7 +179,7 @@ func (a *Client) GetPrivateSetAnnouncementAsRead(params *GetPrivateSetAnnounceme
 }
 
 /*
-GetPrivateSetEmailLanguage changes the language to be used for emails
+  GetPrivateSetEmailLanguage changes the language to be used for emails
 */
 func (a *Client) GetPrivateSetEmailLanguage(params *GetPrivateSetEmailLanguageParams) (*GetPrivateSetEmailLanguageOK, error) {
 	// TODO: Validate the params before sending
@@ -176,7 +192,7 @@ func (a *Client) GetPrivateSetEmailLanguage(params *GetPrivateSetEmailLanguagePa
 		Method:             "GET",
 		PathPattern:        "/private/set_email_language",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPrivateSetEmailLanguageReader{formats: a.formats},
@@ -197,7 +213,7 @@ func (a *Client) GetPrivateSetEmailLanguage(params *GetPrivateSetEmailLanguagePa
 }
 
 /*
-GetPublicGetAnnouncements retrieves announcements from the last 30 days
+  GetPublicGetAnnouncements retrieves announcements from the last 30 days
 */
 func (a *Client) GetPublicGetAnnouncements(params *GetPublicGetAnnouncementsParams) (*GetPublicGetAnnouncementsOK, error) {
 	// TODO: Validate the params before sending
@@ -210,7 +226,7 @@ func (a *Client) GetPublicGetAnnouncements(params *GetPublicGetAnnouncementsPara
 		Method:             "GET",
 		PathPattern:        "/public/get_announcements",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetAnnouncementsReader{formats: a.formats},

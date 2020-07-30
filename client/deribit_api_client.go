@@ -8,11 +8,10 @@ package client
 import (
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 
 	"github.com/canselcik/go-deribit/client/account_management"
-	"github.com/canselcik/go-deribit/client/internals"
+	"github.com/canselcik/go-deribit/client/internal_swagger"
 	"github.com/canselcik/go-deribit/client/market_data"
 	"github.com/canselcik/go-deribit/client/private"
 	"github.com/canselcik/go-deribit/client/public"
@@ -22,7 +21,7 @@ import (
 	"github.com/canselcik/go-deribit/client/websocket_only"
 )
 
-// Default deribit HTTP client.
+// Default deribit API HTTP client.
 var Default = NewHTTPClient(nil)
 
 const (
@@ -37,14 +36,14 @@ const (
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
 var DefaultSchemes = []string{"http"}
 
-// NewHTTPClient creates a new deribit HTTP client.
-func NewHTTPClient(formats strfmt.Registry) *Deribit {
+// NewHTTPClient creates a new deribit API HTTP client.
+func NewHTTPClient(formats strfmt.Registry) *DeribitAPI {
 	return NewHTTPClientWithConfig(formats, nil)
 }
 
-// NewHTTPClientWithConfig creates a new deribit HTTP client,
+// NewHTTPClientWithConfig creates a new deribit API HTTP client,
 // using a customizable transport config.
-func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *Deribit {
+func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *DeribitAPI {
 	// ensure nullable parameters have default
 	if cfg == nil {
 		cfg = DefaultTransportConfig()
@@ -55,34 +54,24 @@ func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *Der
 	return New(transport, formats)
 }
 
-// New creates a new deribit client
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Deribit {
+// New creates a new deribit API client
+func New(transport runtime.ClientTransport, formats strfmt.Registry) *DeribitAPI {
 	// ensure nullable parameters have default
 	if formats == nil {
 		formats = strfmt.Default
 	}
 
-	cli := new(Deribit)
+	cli := new(DeribitAPI)
 	cli.Transport = transport
-
 	cli.AccountManagement = account_management.New(transport, formats)
-
-	cli.Internal = internals.New(transport, formats)
-
+	cli.InternalSwagger = internal_swagger.New(transport, formats)
 	cli.MarketData = market_data.New(transport, formats)
-
 	cli.Private = private.New(transport, formats)
-
 	cli.Public = public.New(transport, formats)
-
 	cli.Supporting = supporting.New(transport, formats)
-
 	cli.Trading = trading.New(transport, formats)
-
 	cli.Wallet = wallet.New(transport, formats)
-
 	cli.WebsocketOnly = websocket_only.New(transport, formats)
-
 	return cli
 }
 
@@ -125,49 +114,39 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 	return cfg
 }
 
-// Deribit is a client for deribit
-type Deribit struct {
-	AccountManagement *account_management.Client
+// DeribitAPI is a client for deribit API
+type DeribitAPI struct {
+	AccountManagement account_management.ClientService
 
-	Internal *internal.Client
+	InternalSwagger internal_swagger.ClientService
 
-	MarketData *market_data.Client
+	MarketData market_data.ClientService
 
-	Private *private.Client
+	Private private.ClientService
 
-	Public *public.Client
+	Public public.ClientService
 
-	Supporting *supporting.Client
+	Supporting supporting.ClientService
 
-	Trading *trading.Client
+	Trading trading.ClientService
 
-	Wallet *wallet.Client
+	Wallet wallet.ClientService
 
-	WebsocketOnly *websocket_only.Client
+	WebsocketOnly websocket_only.ClientService
 
 	Transport runtime.ClientTransport
 }
 
 // SetTransport changes the transport on the client and all its subresources
-func (c *Deribit) SetTransport(transport runtime.ClientTransport) {
+func (c *DeribitAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
-
 	c.AccountManagement.SetTransport(transport)
-
-	c.Internal.SetTransport(transport)
-
+	c.InternalSwagger.SetTransport(transport)
 	c.MarketData.SetTransport(transport)
-
 	c.Private.SetTransport(transport)
-
 	c.Public.SetTransport(transport)
-
 	c.Supporting.SetTransport(transport)
-
 	c.Trading.SetTransport(transport)
-
 	c.Wallet.SetTransport(transport)
-
 	c.WebsocketOnly.SetTransport(transport)
-
 }

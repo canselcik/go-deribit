@@ -9,12 +9,11 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new supporting API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -26,8 +25,15 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	GetPublicGetTime(params *GetPublicGetTimeParams) (*GetPublicGetTimeOK, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-GetPublicGetTime retrieves the current time in milliseconds this API endpoint can be used to check the clock skew between your software and deribit s systems
+  GetPublicGetTime retrieves the current time in milliseconds this API endpoint can be used to check the clock skew between your software and deribit s systems
 */
 func (a *Client) GetPublicGetTime(params *GetPublicGetTimeParams) (*GetPublicGetTimeOK, error) {
 	// TODO: Validate the params before sending
@@ -40,7 +46,7 @@ func (a *Client) GetPublicGetTime(params *GetPublicGetTimeParams) (*GetPublicGet
 		Method:             "GET",
 		PathPattern:        "/public/get_time",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetTimeReader{formats: a.formats},

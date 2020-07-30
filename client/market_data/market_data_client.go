@@ -9,12 +9,11 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new market data API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -26,8 +25,35 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	GetPublicGetBookSummaryByCurrency(params *GetPublicGetBookSummaryByCurrencyParams) (*GetPublicGetBookSummaryByCurrencyOK, error)
+
+	GetPublicGetBookSummaryByInstrument(params *GetPublicGetBookSummaryByInstrumentParams) (*GetPublicGetBookSummaryByInstrumentOK, error)
+
+	GetPublicGetIndex(params *GetPublicGetIndexParams) (*GetPublicGetIndexOK, error)
+
+	GetPublicGetLastSettlementsByCurrency(params *GetPublicGetLastSettlementsByCurrencyParams) (*GetPublicGetLastSettlementsByCurrencyOK, error)
+
+	GetPublicGetLastSettlementsByInstrument(params *GetPublicGetLastSettlementsByInstrumentParams) (*GetPublicGetLastSettlementsByInstrumentOK, error)
+
+	GetPublicGetLastTradesByCurrency(params *GetPublicGetLastTradesByCurrencyParams) (*GetPublicGetLastTradesByCurrencyOK, error)
+
+	GetPublicGetLastTradesByCurrencyAndTime(params *GetPublicGetLastTradesByCurrencyAndTimeParams) (*GetPublicGetLastTradesByCurrencyAndTimeOK, error)
+
+	GetPublicGetLastTradesByInstrument(params *GetPublicGetLastTradesByInstrumentParams) (*GetPublicGetLastTradesByInstrumentOK, error)
+
+	GetPublicGetLastTradesByInstrumentAndTime(params *GetPublicGetLastTradesByInstrumentAndTimeParams) (*GetPublicGetLastTradesByInstrumentAndTimeOK, error)
+
+	GetPublicGetOrderBook(params *GetPublicGetOrderBookParams) (*GetPublicGetOrderBookOK, error)
+
+	GetPublicGetTradeVolumes(params *GetPublicGetTradeVolumesParams) (*GetPublicGetTradeVolumesOK, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-GetPublicGetBookSummaryByCurrency retrieves the summary information such as open interest 24h volume etc for all instruments for the currency optionally filtered by kind
+  GetPublicGetBookSummaryByCurrency retrieves the summary information such as open interest 24h volume etc for all instruments for the currency optionally filtered by kind
 */
 func (a *Client) GetPublicGetBookSummaryByCurrency(params *GetPublicGetBookSummaryByCurrencyParams) (*GetPublicGetBookSummaryByCurrencyOK, error) {
 	// TODO: Validate the params before sending
@@ -40,7 +66,7 @@ func (a *Client) GetPublicGetBookSummaryByCurrency(params *GetPublicGetBookSumma
 		Method:             "GET",
 		PathPattern:        "/public/get_book_summary_by_currency",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetBookSummaryByCurrencyReader{formats: a.formats},
@@ -61,7 +87,7 @@ func (a *Client) GetPublicGetBookSummaryByCurrency(params *GetPublicGetBookSumma
 }
 
 /*
-GetPublicGetBookSummaryByInstrument retrieves the summary information such as open interest 24h volume etc for a specific instrument
+  GetPublicGetBookSummaryByInstrument retrieves the summary information such as open interest 24h volume etc for a specific instrument
 */
 func (a *Client) GetPublicGetBookSummaryByInstrument(params *GetPublicGetBookSummaryByInstrumentParams) (*GetPublicGetBookSummaryByInstrumentOK, error) {
 	// TODO: Validate the params before sending
@@ -74,7 +100,7 @@ func (a *Client) GetPublicGetBookSummaryByInstrument(params *GetPublicGetBookSum
 		Method:             "GET",
 		PathPattern:        "/public/get_book_summary_by_instrument",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetBookSummaryByInstrumentReader{formats: a.formats},
@@ -95,7 +121,7 @@ func (a *Client) GetPublicGetBookSummaryByInstrument(params *GetPublicGetBookSum
 }
 
 /*
-GetPublicGetIndex retrieves the current index price for the instruments for the selected currency
+  GetPublicGetIndex retrieves the current index price for the instruments for the selected currency
 */
 func (a *Client) GetPublicGetIndex(params *GetPublicGetIndexParams) (*GetPublicGetIndexOK, error) {
 	// TODO: Validate the params before sending
@@ -108,7 +134,7 @@ func (a *Client) GetPublicGetIndex(params *GetPublicGetIndexParams) (*GetPublicG
 		Method:             "GET",
 		PathPattern:        "/public/get_index",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetIndexReader{formats: a.formats},
@@ -129,7 +155,7 @@ func (a *Client) GetPublicGetIndex(params *GetPublicGetIndexParams) (*GetPublicG
 }
 
 /*
-GetPublicGetLastSettlementsByCurrency retrieves historical settlement delivery and bankruptcy events coming from all instruments within given currency
+  GetPublicGetLastSettlementsByCurrency retrieves historical settlement delivery and bankruptcy events coming from all instruments within given currency
 */
 func (a *Client) GetPublicGetLastSettlementsByCurrency(params *GetPublicGetLastSettlementsByCurrencyParams) (*GetPublicGetLastSettlementsByCurrencyOK, error) {
 	// TODO: Validate the params before sending
@@ -142,7 +168,7 @@ func (a *Client) GetPublicGetLastSettlementsByCurrency(params *GetPublicGetLastS
 		Method:             "GET",
 		PathPattern:        "/public/get_last_settlements_by_currency",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetLastSettlementsByCurrencyReader{formats: a.formats},
@@ -163,7 +189,7 @@ func (a *Client) GetPublicGetLastSettlementsByCurrency(params *GetPublicGetLastS
 }
 
 /*
-GetPublicGetLastSettlementsByInstrument retrieves historical public settlement delivery and bankruptcy events filtered by instrument name
+  GetPublicGetLastSettlementsByInstrument retrieves historical public settlement delivery and bankruptcy events filtered by instrument name
 */
 func (a *Client) GetPublicGetLastSettlementsByInstrument(params *GetPublicGetLastSettlementsByInstrumentParams) (*GetPublicGetLastSettlementsByInstrumentOK, error) {
 	// TODO: Validate the params before sending
@@ -176,7 +202,7 @@ func (a *Client) GetPublicGetLastSettlementsByInstrument(params *GetPublicGetLas
 		Method:             "GET",
 		PathPattern:        "/public/get_last_settlements_by_instrument",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetLastSettlementsByInstrumentReader{formats: a.formats},
@@ -197,7 +223,7 @@ func (a *Client) GetPublicGetLastSettlementsByInstrument(params *GetPublicGetLas
 }
 
 /*
-GetPublicGetLastTradesByCurrency retrieves the latest trades that have occurred for instruments in a specific currency symbol
+  GetPublicGetLastTradesByCurrency retrieves the latest trades that have occurred for instruments in a specific currency symbol
 */
 func (a *Client) GetPublicGetLastTradesByCurrency(params *GetPublicGetLastTradesByCurrencyParams) (*GetPublicGetLastTradesByCurrencyOK, error) {
 	// TODO: Validate the params before sending
@@ -210,7 +236,7 @@ func (a *Client) GetPublicGetLastTradesByCurrency(params *GetPublicGetLastTrades
 		Method:             "GET",
 		PathPattern:        "/public/get_last_trades_by_currency",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetLastTradesByCurrencyReader{formats: a.formats},
@@ -231,7 +257,7 @@ func (a *Client) GetPublicGetLastTradesByCurrency(params *GetPublicGetLastTrades
 }
 
 /*
-GetPublicGetLastTradesByCurrencyAndTime retrieves the latest trades that have occurred for instruments in a specific currency symbol and within given time range
+  GetPublicGetLastTradesByCurrencyAndTime retrieves the latest trades that have occurred for instruments in a specific currency symbol and within given time range
 */
 func (a *Client) GetPublicGetLastTradesByCurrencyAndTime(params *GetPublicGetLastTradesByCurrencyAndTimeParams) (*GetPublicGetLastTradesByCurrencyAndTimeOK, error) {
 	// TODO: Validate the params before sending
@@ -244,7 +270,7 @@ func (a *Client) GetPublicGetLastTradesByCurrencyAndTime(params *GetPublicGetLas
 		Method:             "GET",
 		PathPattern:        "/public/get_last_trades_by_currency_and_time",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetLastTradesByCurrencyAndTimeReader{formats: a.formats},
@@ -265,7 +291,7 @@ func (a *Client) GetPublicGetLastTradesByCurrencyAndTime(params *GetPublicGetLas
 }
 
 /*
-GetPublicGetLastTradesByInstrument retrieves the latest trades that have occurred for a specific instrument
+  GetPublicGetLastTradesByInstrument retrieves the latest trades that have occurred for a specific instrument
 */
 func (a *Client) GetPublicGetLastTradesByInstrument(params *GetPublicGetLastTradesByInstrumentParams) (*GetPublicGetLastTradesByInstrumentOK, error) {
 	// TODO: Validate the params before sending
@@ -278,7 +304,7 @@ func (a *Client) GetPublicGetLastTradesByInstrument(params *GetPublicGetLastTrad
 		Method:             "GET",
 		PathPattern:        "/public/get_last_trades_by_instrument",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetLastTradesByInstrumentReader{formats: a.formats},
@@ -299,7 +325,7 @@ func (a *Client) GetPublicGetLastTradesByInstrument(params *GetPublicGetLastTrad
 }
 
 /*
-GetPublicGetLastTradesByInstrumentAndTime retrieves the latest trades that have occurred for a specific instrument and within given time range
+  GetPublicGetLastTradesByInstrumentAndTime retrieves the latest trades that have occurred for a specific instrument and within given time range
 */
 func (a *Client) GetPublicGetLastTradesByInstrumentAndTime(params *GetPublicGetLastTradesByInstrumentAndTimeParams) (*GetPublicGetLastTradesByInstrumentAndTimeOK, error) {
 	// TODO: Validate the params before sending
@@ -312,7 +338,7 @@ func (a *Client) GetPublicGetLastTradesByInstrumentAndTime(params *GetPublicGetL
 		Method:             "GET",
 		PathPattern:        "/public/get_last_trades_by_instrument_and_time",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetLastTradesByInstrumentAndTimeReader{formats: a.formats},
@@ -333,7 +359,7 @@ func (a *Client) GetPublicGetLastTradesByInstrumentAndTime(params *GetPublicGetL
 }
 
 /*
-GetPublicGetOrderBook retrieves the order book along with other market values for a given instrument
+  GetPublicGetOrderBook retrieves the order book along with other market values for a given instrument
 */
 func (a *Client) GetPublicGetOrderBook(params *GetPublicGetOrderBookParams) (*GetPublicGetOrderBookOK, error) {
 	// TODO: Validate the params before sending
@@ -346,7 +372,7 @@ func (a *Client) GetPublicGetOrderBook(params *GetPublicGetOrderBookParams) (*Ge
 		Method:             "GET",
 		PathPattern:        "/public/get_order_book",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetOrderBookReader{formats: a.formats},
@@ -367,7 +393,7 @@ func (a *Client) GetPublicGetOrderBook(params *GetPublicGetOrderBookParams) (*Ge
 }
 
 /*
-GetPublicGetTradeVolumes retrieves aggregated 24h trade volumes for different instrument types and currencies
+  GetPublicGetTradeVolumes retrieves aggregated 24h trade volumes for different instrument types and currencies
 */
 func (a *Client) GetPublicGetTradeVolumes(params *GetPublicGetTradeVolumesParams) (*GetPublicGetTradeVolumesOK, error) {
 	// TODO: Validate the params before sending
@@ -380,7 +406,7 @@ func (a *Client) GetPublicGetTradeVolumes(params *GetPublicGetTradeVolumesParams
 		Method:             "GET",
 		PathPattern:        "/public/get_trade_volumes",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &GetPublicGetTradeVolumesReader{formats: a.formats},
