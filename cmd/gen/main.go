@@ -74,11 +74,11 @@ func main() {
 
 var subscriptionTemplate = `
 // {{.FuncName}} subscribes to the {{.Channel}} channel
-func (e *Exchange) {{.FuncName}}({{.Args}}{{if .Args}} string{{end}}) (chan *models.{{.Type}}, error) {
+func (e *Exchange) {{.FuncName}}({{.Args}}{{if .Args}} string{{end}}) (chan models.{{.Type}}, error) {
 	chans := []string{ {{if .Args}}fmt.Sprintf("{{.Format}}", {{.Args}} ) {{else}}"{{.Format}}"{{end}} }
 	
 	c := make(chan *RPCNotification)
-	out := make(chan *models.{{.Type}})
+	out := make(chan models.{{.Type}})
 	sub := &RPCSubscription{Data: c, Channel: chans[0]}
 	e.calls.addSubscription(sub)
 
